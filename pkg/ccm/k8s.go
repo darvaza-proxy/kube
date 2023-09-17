@@ -40,6 +40,25 @@ func (opts *Options) Cloud() cloudprovider.Interface {
 	return opts.cloud
 }
 
+// AddController adds a controller to the options
+func (opts *Options) AddController(name, clientName string, f app.InitFuncConstructor, aliases ...string) {
+	opts.initializers[name] = app.ControllerInitFuncConstructor{
+		InitContext: app.ControllerInitContext{
+			ClientName: clientName,
+		},
+		Constructor: f,
+	}
+
+	for _, alias := range aliases {
+		opts.aliases[alias] = name
+	}
+}
+
+// RemoveController removes a controller from the options
+func (opts *Options) RemoveController(name string) {
+	delete(opts.initializers, name)
+}
+
 func (opts *Options) cloudInitializer(c *config.CompletedConfig) cloudprovider.Interface {
 	cc := c.ComponentConfig.KubeCloudShared.CloudProvider
 
