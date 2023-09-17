@@ -2,6 +2,7 @@ package ccm
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/component-base/cli/flag"
@@ -22,6 +23,16 @@ type Options struct {
 	aliases      map[string]string
 	fss          flag.NamedFlagSets
 	cloud        cloudprovider.Interface
+}
+
+// FlagSets returns the cli flags
+func (opts *Options) FlagSets() *flag.NamedFlagSets {
+	return &opts.fss
+}
+
+// FlagSet returns a cli flagset by name
+func (opts *Options) FlagSet(name string) *pflag.FlagSet {
+	return opts.fss.FlagSet(name)
 }
 
 // Cloud returns the initialized cloud provider
