@@ -21,6 +21,8 @@ var (
 // Provider is an instance of the cloud we implement
 type Provider struct {
 	configContent []byte
+
+	lbm LoadBalancerManager
 }
 
 // Initialize provides the cloud with a kubernetes client builder and may spawn goroutines
@@ -29,7 +31,9 @@ type Provider struct {
 func (*Provider) Initialize(_ cloudprovider.ControllerClientBuilder, _ <-chan struct{}) {}
 
 // LoadBalancer returns a balancer interface. Also returns true if the interface is supported, false otherwise.
-func (*Provider) LoadBalancer() (cloudprovider.LoadBalancer, bool) { return nil, false }
+func (p *Provider) LoadBalancer() (cloudprovider.LoadBalancer, bool) {
+	return &p.lbm, true
+}
 
 // Instances returns an instances interface. Also returns true if the interface is supported, false otherwise.
 func (*Provider) Instances() (cloudprovider.Instances, bool) { return nil, false }
@@ -69,6 +73,10 @@ func providerFactory(r io.Reader) (cloudprovider.Interface, error) {
 
 	p := &Provider{
 		configContent: b,
+	}
+
+	if err := p.lbm.init(p); err != nil {
+		return nil, err
 	}
 
 	return p, nil
