@@ -3,6 +3,8 @@ name: Lint
 # Trigger the workflow on pull requests and direct pushes to any branch
 on:
   push:
+    branches-ignore:
+      - '**-wip'
   pull_request:
 
 jobs:
