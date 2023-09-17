@@ -1,0 +1,26 @@
+# Build a binary for each target in targets.
+builds:
+  - main: ./cmd/darvaza-kube-ccm
+    id: darvaza-kube-ccm
+    binary: darvaza-kube-ccm
+    mod_timestamp: "{{ .CommitTimestamp }}"
+    ldflags:
+      - -X main.kubeBuilderVersion={{ .Version }}
+      - -X main.goos={{ .Os }}
+      - -X main.goarch={{ .Arch }}
+      - -X main.gitCommit={{ .Commit }}
+      - -X main.buildDate={{ .Date }}
+      - -X main.kubernetesVendorVersion={{ .Env.KUBERNETES_VERSION }}
+    targets:
+      - linux_amd64
+      - linux_arm64
+      - linux_ppc64le
+      - darwin_amd64
+      - darwin_arm64
+    env:
+      - KUBERNETES_VERSION=1.28.2
+      - CGO_ENABLED=0
+
+# Checksum all binaries.
+checksum:
+  name_template: "checksums.txt"
