@@ -11,6 +11,12 @@ import (
 	"k8s.io/klog/v2"
 
 	"darvaza.org/kube/pkg/ccm"
+	"darvaza.org/kube/pkg/version"
+)
+
+var (
+	// TODO: do something useful
+	_ = version.Get()
 )
 
 func main() {
