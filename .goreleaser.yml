@@ -1,3 +1,4 @@
+project_name: darvaza_kube
 builds:
   - main: ./cmd/darvaza-kube-ccm
     id: darvaza-kube-ccm
@@ -18,6 +19,12 @@ builds:
     env:
       - CGO_ENABLED=0
 
-# Checksum all binaries.
+archives:
+  - id: darvaza-kube
+    builds:
+      - darvaza-kube-ccm
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+    format: tar.xz
 checksum:
-  name_template: "checksums.txt"
+  name_template: "{{ .ProjectName }}_checksums.txt"
+  algorithm: sha256
