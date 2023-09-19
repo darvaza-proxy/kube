@@ -10,12 +10,13 @@ builds:
       - -X darvaza.org/kube/pkg/version.Branch={{ if .IsSnapshot }}{{ .Version }}{{ else }} {{ .Tag }}{{ end }}
       - -X darvaza.org/kube/pkg/version.Commit={{ .ShortCommit }}
       - -X darvaza.org/kube/pkg/version.BuildDate={{ .Timestamp }}
-    targets:
-      - linux_amd64
-      - linux_arm64
-      - linux_ppc64le
-      - darwin_amd64
-      - darwin_arm64
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+      - ppc64le
     env:
       - CGO_ENABLED=0
 
