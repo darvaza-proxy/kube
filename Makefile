@@ -25,8 +25,22 @@ V = 0
 Q = $(if $(filter 1,$V),,@)
 M = $(shell if [ "$$(tput colors 2> /dev/null || echo 0)" -ge 8 ]; then printf "\033[34;1m▶\033[0m"; else printf "▶"; fi)
 
+MODULE = $(shell grep ^module go.mod | cut -d' ' -f2)
+CMD_VERSION = $(shell git describe --tags --always --dirty --match=v* 2> /dev/null || \
+	      cat .version 2> /dev/null || echo v0)
+CMD_COMMIT = $(shell git rev-parse --short HEAD)
+CMD_BRANCH = $(shell git branch --show-current)
+CMD_BUILDDATE = $(shell date -u +%s)
+
+GO_VERSION_PACKAGE = $(MODULE)/pkg/version
+GO_BUILD_CMD_LDFLAGS=-s -w \
+      -X $(GO_VERSION_PACKAGE).Version=$(CMD_VERSION) \
+      -X $(GO_VERSION_PACKAGE).Branch=$(CMD_BRANCH) \
+      -X $(GO_VERSION_PACKAGE).Commit=$(CMD_COMMIT) \
+      -X $(GO_VERSION_PACKAGE).BuildDate=$(CMD_BUILDDATE)
+
 GO_BUILD = $(GO) build -v
-GO_BUILD_CMD = $(GO_BUILD) -o "$(OUTDIR)"
+GO_BUILD_CMD = $(GO_BUILD) -o "$(OUTDIR)" -ldflags "$(GO_BUILD_CMD_LDFLAGS)"
 
 all: get generate tidy build
 
