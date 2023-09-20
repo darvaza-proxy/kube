@@ -40,6 +40,6 @@ kos:
       - linux/arm64
     tags:
       - latest
-      - {{ .Tag }}
+      - '{{ .Tag }}'
     creation_time: "{{ .CommitTimestamp }}"
     ko_data_creation_time: "{{ .CommitTimestamp }}"
