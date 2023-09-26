@@ -2,9 +2,16 @@ module darvaza.org/kube
 
 go 1.20
 
+replace (
+	darvaza.org/sidecar => ../sidecar
+	darvaza.org/sidecar/pkg/certmagic => ../sidecar/pkg/certmagic
+)
+
 require (
 	darvaza.org/core v0.10.0
+	darvaza.org/darvaza/shared v0.5.11
 	darvaza.org/sidecar v0.0.8
+	darvaza.org/sidecar/pkg/certmagic v0.0.0-00010101000000-000000000000
 	darvaza.org/sidecar/pkg/service v0.0.4
 	darvaza.org/slog v0.5.4
 	github.com/mgechev/revive v1.3.4
@@ -20,7 +27,6 @@ require (
 require (
 	darvaza.org/darvaza/acme v0.1.7 // indirect
 	darvaza.org/darvaza/agent v0.2.10 // indirect
-	darvaza.org/darvaza/shared v0.5.11 // indirect
 	darvaza.org/darvaza/shared/config v0.2.5 // indirect
 	darvaza.org/darvaza/shared/web v0.3.11 // indirect
 	darvaza.org/middleware v0.2.6 // indirect
@@ -35,6 +41,7 @@ require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
+	github.com/caddyserver/certmagic v0.19.2 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/chavacava/garif v0.1.0 // indirect
@@ -78,12 +85,15 @@ require (
 	github.com/kardianos/service v1.2.2 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
+	github.com/libdns/libdns v0.2.1 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/matttproud/golang_protobuf_extensions/v2 v2.0.0 // indirect
 	github.com/mgechev/dots v0.0.0-20210922191527-e955255bf517 // indirect
+	github.com/mholt/acmez v1.2.0 // indirect
+	github.com/miekg/dns v1.1.56 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/moby/term v0.5.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect

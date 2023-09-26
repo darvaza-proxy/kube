@@ -5,6 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"darvaza.org/sidecar/pkg/certmagic"
 	"darvaza.org/sidecar/pkg/sidecar"
 	"darvaza.org/slog"
 
@@ -19,9 +20,19 @@ type Application struct {
 
 // Init initializes the [Application]
 func (app *Application) Init(ctx context.Context, cfg *Config, logger slog.Logger) error {
+	// TLS Store
+	cm, err := cfg.TLS.New(
+		certmagic.WithContext(ctx),
+		certmagic.WithLogger(logger),
+	)
+	if err != nil {
+		return err
+	}
+
 	// Listener
 	cfg.Server.Context = ctx
 	cfg.Server.Logger = logger
+	cfg.Server.Store = cm
 
 	srv, err := cfg.Server.New()
 	if err != nil {
@@ -31,6 +42,7 @@ func (app *Application) Init(ctx context.Context, cfg *Config, logger slog.Logge
 	// Handler
 	cfg.Proxy.Context = ctx
 	cfg.Proxy.Logger = logger
+	cfg.Proxy.Store = cm
 
 	r, err := cfg.Proxy.New()
 	if err != nil {

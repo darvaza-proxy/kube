@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 
+	"darvaza.org/sidecar/pkg/certmagic"
 	"darvaza.org/sidecar/pkg/config"
 	"darvaza.org/sidecar/pkg/sidecar"
 	"github.com/spf13/cobra"
@@ -13,8 +14,9 @@ import (
 // Config is the configuration structure of this
 // reverse proxy server
 type Config struct {
-	Server sidecar.Config `json:",omitempty" yaml:",omitempty" toml:",omitempty"`
-	Proxy  edge.Config    `json:",omitempty" yaml:",omitempty" toml:",omitempty"`
+	Server sidecar.Config   `json:",omitempty" yaml:",omitempty" toml:",omitempty"`
+	TLS    certmagic.Config `json:",omitempty" yaml:",omitempty" toml:",omitempty"`
+	Proxy  edge.Config      `json:",omitempty" yaml:",omitempty" toml:",omitempty"`
 }
 
 // NewConfig creates a new [Config] initialized with

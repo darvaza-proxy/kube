@@ -3,6 +3,7 @@ package edge
 import (
 	"context"
 
+	"darvaza.org/darvaza/shared/storage"
 	"darvaza.org/slog"
 )
 
@@ -10,6 +11,7 @@ import (
 type Config struct {
 	Logger  slog.Logger     `json:"-" yaml:"-" toml:"-"`
 	Context context.Context `json:"-" yaml:"-" toml:"-"`
+	Store   storage.Store   `json:"-" yaml:"-" toml:"-"`
 }
 
 // Prepare fills any gap in the Config and validates its content
