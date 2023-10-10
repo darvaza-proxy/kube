@@ -64,7 +64,7 @@ func providerFactory(r io.Reader) (cloudprovider.Interface, error) {
 		// no config file, fine for now
 	case err != nil:
 		// another error, fatal
-		return nil, core.Wrapf(err, "cloud-provider-%s: failed to read config", ProviderName)
+		return nil, core.Wrap(err, "cloud-provider-%s: failed to read config", ProviderName)
 	}
 
 	p := &Provider{
