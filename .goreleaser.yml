@@ -6,8 +6,8 @@ builds:
     mod_timestamp: "{{ .CommitTimestamp }}"
     ldflags:
       - -s -w
-      - -X darvaza.org/kube/pkg/version.Version={{ if .IsSnapshot }}{{ .Version }}{{ else }} {{ .Tag }}{{ end }}
-      - -X darvaza.org/kube/pkg/version.Branch={{ if .IsSnapshot }}{{ .Version }}{{ else }} {{ .Tag }}{{ end }}
+      - -X darvaza.org/kube/pkg/version.Version={{ if .IsSnapshot }}{{ .Version }}{{ else }}{{ .Tag }}{{ end }}
+      - -X darvaza.org/kube/pkg/version.Branch={{ if .IsSnapshot }}{{ .Version }}{{ else }}{{ .Tag }}{{ end }}
       - -X darvaza.org/kube/pkg/version.Commit={{ .ShortCommit }}
       - -X darvaza.org/kube/pkg/version.BuildDate={{ .Timestamp }}
     goos:
