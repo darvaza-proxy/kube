@@ -1,6 +1,8 @@
 package ccm
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 
@@ -72,7 +74,7 @@ func (opts *Options) cloudInitializer(c *config.CompletedConfig) cloudprovider.I
 		// ready
 	case c.ComponentConfig.KubeCloudShared.AllowUntaggedCloud:
 		// untagged but allowed
-		klog.Warning("cloud-provider-%s: TODO: a ClusterID will be required in the future", cc.Name)
+		klog.Warning(fmt.Sprintf("cloud-provider-%s: TODO: a ClusterID will be required in the future", cc.Name))
 	default:
 		// untagged not allowed
 		klog.Fatalf("cloud-provider-%s: no ClusterID found", cc.Name)
