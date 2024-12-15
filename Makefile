@@ -5,21 +5,29 @@ GO ?= go
 GOFMT ?= gofmt
 GOFMT_FLAGS = -w -l -s
 GOGENERATE_FLAGS = -v
+GOUP_FLAGS ?= -v
+GOUP_PACKAGES ?= ./...
+GOTEST_FLAGS ?=
 
 GOPATH ?= $(shell $(GO) env GOPATH)
 GOBIN ?= $(GOPATH)/bin
 
-TOOLSDIR := $(CURDIR)/pkg/tools
+TOOLSDIR := $(CURDIR)/pkg/internal/build
 TMPDIR ?= $(CURDIR)/.tmp
 OUTDIR ?= $(TMPDIR)
 
-REVIVE ?= $(GOBIN)/revive
+# Dynamic version selection based on Go version
+# Format: $(TOOLSDIR)/get_version.sh <go_version> <tool_version1> <tool_version2> ..
+GOLANGCI_LINT_VERSION ?= $(shell $(TOOLSDIR)/get_version.sh 1.21 v1.59 v1.61)
+REVIVE_VERSION ?= $(shell $(TOOLSDIR)/get_version.sh 1.21 v1.4)
+
+GOLANGCI_LINT_URL ?= github.com/golangci/golangci-lint/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
+GOLANGCI_LINT ?= $(GO) run $(GOLANGCI_LINT_URL)
+
 REVIVE_CONF ?= $(TOOLSDIR)/revive.toml
 REVIVE_RUN_ARGS ?= -config $(REVIVE_CONF) -formatter friendly
-REVIVE_INSTALL_URL ?= github.com/mgechev/revive
-
-GO_INSTALL_URLS = \
-	$(REVIVE_INSTALL_URL) \
+REVIVE_URL ?= github.com/mgechev/revive@$(REVIVE_VERSION)
+REVIVE ?= $(GO) run $(REVIVE_URL)
 
 V = 0
 Q = $(if $(filter 1,$V),,@)
@@ -27,17 +35,17 @@ M = $(shell if [ "$$(tput colors 2> /dev/null || echo 0)" -ge 8 ]; then printf "
 
 MODULE = $(shell grep ^module go.mod | cut -d' ' -f2)
 CMD_VERSION = $(shell git describe --tags --always --dirty --match=v* 2> /dev/null || \
-	      cat .version 2> /dev/null || echo v0)
+		cat .version 2> /dev/null || echo v0)
 CMD_COMMIT = $(shell git rev-parse --short HEAD)
 CMD_BRANCH = $(shell git branch --show-current)
 CMD_BUILDDATE = $(shell date -u +%s)
 
 GO_VERSION_PACKAGE = $(MODULE)/pkg/version
 GO_BUILD_CMD_LDFLAGS=-s -w \
-      -X $(GO_VERSION_PACKAGE).Version=$(CMD_VERSION) \
-      -X $(GO_VERSION_PACKAGE).Branch=$(CMD_BRANCH) \
-      -X $(GO_VERSION_PACKAGE).Commit=$(CMD_COMMIT) \
-      -X $(GO_VERSION_PACKAGE).BuildDate=$(CMD_BUILDDATE)
+	-X $(GO_VERSION_PACKAGE).Version=$(CMD_VERSION) \
+	-X $(GO_VERSION_PACKAGE).Branch=$(CMD_BRANCH) \
+	-X $(GO_VERSION_PACKAGE).Commit=$(CMD_COMMIT) \
+	-X $(GO_VERSION_PACKAGE).BuildDate=$(CMD_BUILDDATE)
 
 GO_BUILD = $(GO) build -v
 GO_BUILD_CMD = $(GO_BUILD) -o "$(OUTDIR)" -ldflags "$(GO_BUILD_CMD_LDFLAGS)"
@@ -66,6 +74,3 @@ tidy: fmt
 
 generate: ; $(info $(M) running go:generate…)
 	$Q git grep -l '^//go:generate' | sort -uV | xargs -r -n1 $(GO) generate $(GOGENERATE_FLAGS)
-
-$(REVIVE):
-	$Q $(GO) install -v $(REVIVE_INSTALL_URL)
