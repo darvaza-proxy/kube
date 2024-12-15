@@ -2,8 +2,9 @@ module darvaza.org/kube
 
 go 1.21
 
+require darvaza.org/core v0.15.4
+
 require (
-	darvaza.org/core v0.15.4
 	github.com/mgechev/revive v1.3.4
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/pflag v1.0.5
