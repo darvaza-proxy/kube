@@ -4,7 +4,7 @@ go 1.23.0
 
 toolchain go1.23.4
 
-require darvaza.org/core v0.15.6
+require darvaza.org/core v0.16.0
 
 require (
 	github.com/spf13/cobra v1.8.1
