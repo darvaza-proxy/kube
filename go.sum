@@ -1,7 +1,7 @@
 cel.dev/expr v0.18.0 h1:CJ6drgk+Hf96lkLikr4rFf19WrU0BOWEihyZnI2TAzo=
 cel.dev/expr v0.18.0/go.mod h1:MrpN08Q+lEBs+bGYdLxxHkZoUSsCp0nSKTs0nTymJgw=
-darvaza.org/core v0.15.6 h1:hQ4GvE6G9I5nQNfzXKRFt3umZuwO0rFFiuMfMXGnUSY=
-darvaza.org/core v0.15.6/go.mod h1:oKblI5yWNc1km+JzkFBF0w7lrr7M719cHWVwvvbjHek=
+darvaza.org/core v0.16.0 h1:HVmXTR9ICupNRlhAGsRMXZw29tj0PHW1PTRrh8CJi2c=
+darvaza.org/core v0.16.0/go.mod h1:BdCiYSILYNk4krD0WPgQWb7feXJRlRp2fClfBY+HiWc=
 github.com/Azure/go-ansiterm v0.0.0-20230124172434-306776ec8161 h1:L/gRVlceqvL25UVaW/CKtUDjefjrs0SPonmDGUVOYP0=
 github.com/Azure/go-ansiterm v0.0.0-20230124172434-306776ec8161/go.mod h1:xomTg63KZ2rFqZQzSB4Vz2SUXa1BpHTVz9L5PTmPC4E=
 github.com/NYTimes/gziphandler v1.1.1 h1:ZUDjpQae29j0ryrS0u/B8HZfJBtBQHjqw2rQ2cqUQ3I=
