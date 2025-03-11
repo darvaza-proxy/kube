@@ -2,7 +2,7 @@ module darvaza.org/kube
 
 go 1.23.0
 
-toolchain go1.23.4
+toolchain go1.23.7
 
 require darvaza.org/core v0.16.0
 
